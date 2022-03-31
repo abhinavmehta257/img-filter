@@ -1,0 +1,53 @@
+<div>
+<form action="/uploadImage" method="post" enctype="multipart/form-data">
+<label for="imageBase64Encoded">Select Image</label>
+<input type="file" id="upload-photo" name="image" type="file"> <br>
+<input type="text" id="styleId" name="styleId" hidden="true">
+<button type="submit">submit</button>
+</form>
+</div>
+
+<div class="outer">
+{{#each styles}}
+    <div style="padding: 5px;" >
+        {{@index}}
+        <div onclick="selected(this)" data-styleid="{{this.id}}" style="width: 100px; height:100px; background:url('{{this.url}}'); background-size:cover"></div>
+        {{!-- <img data-styleid="{{this.id}}" src="{{this.url}}" alt="" width="100px"> --}}
+    </div>
+{{/each}}
+</div>
+<br>
+<img src="{{styledimage}}" alt="" width="300px" style="margin: auto;">
+
+
+<script defer>
+let perdiv;
+function selected(div){
+    if(perdiv){
+        perdiv.parentElement.style.background = "none";
+    }
+    document.getElementById('styleId').value = div.getAttribute('data-styleid');
+    console.log(styleId);
+    div.parentElement.style.background = 'lightblue';
+    perdiv = div;
+
+}
+
+function postImage(){
+    let url = "/img";
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+
+    let data = {
+        "imageBase64Encoded": "image",
+        "styleId": "styleId"
+    };
+
+    xhr.send({
+        "imageBase64Encoded": "image",
+        "styleId": "styleId"
+    });
+}
+
+</script>
