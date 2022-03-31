@@ -18,7 +18,7 @@
 <p style="color: red;">
         *please choose the image and filter before uploading
     </p>
-<button id="submit" type="submit" disabled="true">submit</button>
+<button id="submit" onclick="disable()" type="submit" disabled="true">submit</button>
 </form>
 </div>
 
@@ -50,5 +50,11 @@ document.getElementById('upload-photo').addEventListener('change', function(e) {
         document.getElementById('submit').disabled = false;
     }
 });
-
+function disable(){
+    let div = document.createElement('div');
+    let text = document.createTextNode('loading...');
+    div.appendChild(text);
+    div.classList.add('loader');
+    document.body.appendChild(div);
+}   
 </script>
