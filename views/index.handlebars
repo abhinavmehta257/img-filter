@@ -1,12 +1,10 @@
 <div>
+    
 <form action="/uploadImage" method="post" enctype="multipart/form-data">
-<label for="imageBase64Encoded">Select Image</label>
+<label for="imageBase64Encoded">Select Image</label><br>
 <input type="file" id="upload-photo" name="image" type="file"> <br>
 <input type="text" id="styleId" name="styleId" hidden="true">
-<button type="submit">submit</button>
-</form>
-</div>
-
+<p>Select Filters</p>
 <div class="outer">
 {{#each styles}}
     <div style="padding: 5px;" >
@@ -17,37 +15,40 @@
 {{/each}}
 </div>
 <br>
+<p style="color: red;">
+        *please choose the image and filter before uploading
+    </p>
+<button id="submit" type="submit" disabled="true">submit</button>
+</form>
+</div>
+
+
 <img src="{{styledimage}}" alt="" width="300px" style="margin: auto;">
 
 
 <script defer>
-let perdiv;
+let perdiv,styleId,file;
 function selected(div){
     if(perdiv){
         perdiv.parentElement.style.background = "none";
     }
     document.getElementById('styleId').value = div.getAttribute('data-styleid');
+    styleId = div.getAttribute('data-styleid');
     console.log(styleId);
     div.parentElement.style.background = 'lightblue';
     perdiv = div;
 
+    if(styleId){
+        document.getElementById('submit').disabled = false;
+    }
+
 }
 
-function postImage(){
-    let url = "/img";
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-
-    let data = {
-        "imageBase64Encoded": "image",
-        "styleId": "styleId"
-    };
-
-    xhr.send({
-        "imageBase64Encoded": "image",
-        "styleId": "styleId"
-    });
-}
+document.getElementById('upload-photo').addEventListener('change', function(e) {
+    file = e.target.files[0];
+    if(file && styleId){
+        document.getElementById('submit').disabled = false;
+    }
+});
 
 </script>

@@ -77,8 +77,7 @@ app.post('/uploadImage', upload.single('image'), (req, res) => {
                         res.render('index',{styles:styles,styledimage:styledimage});
                     }
                 });
-            }, 2000
-        )
+            }, 2000)
         
     });
 
